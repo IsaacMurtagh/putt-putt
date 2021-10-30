@@ -1,12 +1,14 @@
 {
   "scripts": {
     "lint": "eslint .",
-    "start": "node src/index.js"
+    "start": "nodemon src/index.js"
   },
   "dependencies": {
+    "@hapi/glue": "^8.0.0",
     "@hapi/hapi": "^20.2.1"
   },
   "devDependencies": {
-    "eslint": "^8.1.0"
+    "eslint": "^8.1.0",
+    "nodemon": "^2.0.14"
   }
 }
