@@ -1,6 +1,8 @@
+const inMemoryDb = require('../database/inMemoryDb');
 
 function handler() {
-  return 'hello world!';
+  const { message } = inMemoryDb;
+  return { message };
 }
 
 module.exports = {
