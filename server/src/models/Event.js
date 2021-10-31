@@ -73,6 +73,7 @@ module.exports = class Event {
     gameState.startedAt = this.time;
     gameState.lastMoveAt = this.time;
     gameState.nextPlayer = getNextPlayer();
+    gameState.eventNumber = 0;
   }
 
   applyTakeTurn(gameState) {
@@ -83,5 +84,6 @@ module.exports = class Event {
     gameState.lastMoveAt = this.time;
     gameState.board[this.column][tokenLevel] = gameState.nextPlayer;
     gameState.nextPlayer = getNextPlayer(gameState.nextPlayer);
+    gameState.eventNumber += 1;
   }
 };

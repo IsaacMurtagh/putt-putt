@@ -9,6 +9,7 @@ module.exports = class ConnectFour {
     this.startedAt = props.startedAt;
     this.lastMoveAt = props.lastMoveAt;
     this.board = props.board;
+    this.eventNumber = props.eventNumber;
   }
 
   static fromEvents(events) {
@@ -25,6 +26,7 @@ module.exports = class ConnectFour {
       board: this.board,
       id: this.id,
       nextPlayer: this.nextPlayer,
+      eventNumber: this.eventNumber,
     };
   }
 };

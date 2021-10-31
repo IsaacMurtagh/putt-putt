@@ -38,6 +38,25 @@ class EventsTable {
       throw err;
     });
   }
+
+  async getEventsUpTo({ id, number }) {
+    return dbClient.query({
+      TableName: this.name,
+      ExpressionAttributeValues: {
+        ':pk': id,
+        ':sk': 'Event#'
+      },
+      KeyConditionExpression: 'pk = :pk AND begins_with(sk, :sk)',
+      Limit: number,
+    }).promise()
+    .then(result => {
+      return result.Items ? result.Items.map(item => Event.fromDocument(item)) : [];
+    })
+    .catch(err => {
+      console.error(err);
+      throw err;
+    });
+  }
 }
 const connectionsTable = new EventsTable();
 module.exports = connectionsTable;
