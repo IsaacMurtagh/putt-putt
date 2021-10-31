@@ -8,3 +8,13 @@ services:
       # - /usr/app/node_modules
     ports:
       - "3000:3000"
+    depends_on: ["dynamo"]
+  dynamo:
+    image:  amazon/dynamodb-local
+    hostname: dynamodb
+    restart: always
+    ports:
+      - 8000:8000
+    expose:
+      - "8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb"

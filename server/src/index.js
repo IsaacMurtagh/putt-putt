@@ -14,5 +14,5 @@ const init = async () => {
 };
 
 init()
-  .then(console.log);
-//   .catch(console.error);
+  .then(console.log)
+  .catch(console.error);

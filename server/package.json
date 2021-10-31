@@ -4,8 +4,11 @@
     "start": "nodemon src/index.js"
   },
   "dependencies": {
+    "@hapi/boom": "^9.1.4",
     "@hapi/glue": "^8.0.0",
-    "@hapi/hapi": "^20.2.1"
+    "@hapi/hapi": "^20.2.1",
+    "aws-sdk": "^2.1018.0",
+    "uniqid": "^5.4.0"
   },
   "devDependencies": {
     "eslint": "^8.1.0",
