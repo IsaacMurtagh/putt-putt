@@ -54,7 +54,7 @@ module.exports = class Event {
     return {
       ...this,
       pk: this.id,
-      sk: `Event#${this.number}`,
+      sk: `Event#${this.number.toString().padStart(10, '0')}`,
       time: this.time.toISOString(),
     };
   }
@@ -76,12 +76,12 @@ module.exports = class Event {
   }
 
   applyTakeTurn(gameState) {
-    gameState.lastMoveAt = this.time;
-    gameState.nextPlayer = getNextPlayer(gameState.nextPlayer);
     const tokenLevel = gameState.board[this.column].indexOf('_');
     if (tokenLevel == -1) {
       throw new Error('Illegal Move');
     }
+    gameState.lastMoveAt = this.time;
     gameState.board[this.column][tokenLevel] = gameState.nextPlayer;
+    gameState.nextPlayer = getNextPlayer(gameState.nextPlayer);
   }
 };

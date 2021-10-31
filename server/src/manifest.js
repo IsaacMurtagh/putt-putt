@@ -4,6 +4,11 @@ const logger = require('./logger');
 module.exports = {
   server: {
     port: '3000',
+    routes: {
+      cors: {
+        origin: [ '*' ],
+      }
+    }
   },
   register: {
     plugins: [

@@ -1,5 +1,5 @@
 function constructBoard() {
-  return Array(6).fill().map(() => Array(7).fill('_'));
+  return Array(7).fill().map(() => Array(6).fill('_'));
 }
 
 module.exports = class ConnectFour {
