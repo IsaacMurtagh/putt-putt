@@ -8,7 +8,7 @@ services:
       # - /usr/app/node_modules
     ports:
       - "3000:3000"
-    depends_on: ["dynamo"]
+    depends_on: [ dynamodb-init ]
   dynamo:
     image:  amazon/dynamodb-local
     hostname: dynamodb
@@ -18,3 +18,9 @@ services:
     expose:
       - "8000"
     command: "-jar DynamoDBLocal.jar -sharedDb"
+  dynamodb-init:
+    image: node:14
+    working_dir: /work
+    volumes: [ ".:/work" ]
+    command: [ scripts/init.sh ]
+    depends_on: [ dynamo ]

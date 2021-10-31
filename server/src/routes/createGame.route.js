@@ -11,6 +11,6 @@ async function handler(request, h) {
 
 module.exports = {
   method: 'POST',
-  path: '/connect-four/create',
+  path: '/connect-four',
   handler,
 };

@@ -1,7 +1,8 @@
 const uniqid = require('uniqid');
 
 const eventTypes = {
-  create: 'create-game'
+  create: 'create-game',
+  takeTurn: 'take-turn',
 };
 
 function getNextPlayer(lastPlayer) {
@@ -17,6 +18,7 @@ module.exports = class Event {
     this.number = props.number;
     this.type = props.type;
     this.time = props.time;
+    this.column = props.column;
   }
 
   static createGame() {
@@ -28,12 +30,23 @@ module.exports = class Event {
     });
   }
 
+  static takeTurn({ id, column, number}) {
+    return new Event({
+      type: eventTypes.takeTurn,
+      number,
+      time: new Date(),
+      id,
+      column: Number(column),
+    });
+  }
+
   static fromDocument(doc) {
     return new Event({
       type: doc.type,
       number: doc.number,
       id: doc.id,
       time: new Date(doc.time),
+      column: doc.column,
     });
   }
 
@@ -50,13 +63,25 @@ module.exports = class Event {
     switch(this.type) {
     case eventTypes.create:
       return this.applyCreate(gameState);
+    case eventTypes.takeTurn:
+      return this.applyTakeTurn(gameState);
     }
   }
 
   applyCreate(gameState) {
     gameState.id = this.id;
-    gameState.startAt = this.time;
+    gameState.startedAt = this.time;
     gameState.lastMoveAt = this.time;
     gameState.nextPlayer = getNextPlayer();
+  }
+
+  applyTakeTurn(gameState) {
+    gameState.lastMoveAt = this.time;
+    gameState.nextPlayer = getNextPlayer(gameState.nextPlayer);
+    const tokenLevel = gameState.board[this.column].indexOf('_');
+    if (tokenLevel == -1) {
+      throw new Error('Illegal Move');
+    }
+    gameState.board[this.column][tokenLevel] = gameState.nextPlayer;
   }
 };
