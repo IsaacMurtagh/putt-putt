@@ -28,6 +28,21 @@ export default {
     });
   },
 
+  async getGameStateAtEvent({ id, number }) {
+    return await instance.get(`/connect-four/${id}/replay`, {
+      params: {
+        number,
+      }
+    })
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      console.error('GetGameStateApiFailed');
+      throw err;
+    });
+  },
+
   async takeTurn({ id, column }) {
     return await instance.post(`/connect-four/${id}/take-turn`, {
       column,

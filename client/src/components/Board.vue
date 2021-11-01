@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-blue-400 flex justify-between p-4 pb-8 mt-10">
+  <div class="bg-blue-400 flex justify-between p-4 pb-8">
     <div
       v-for="(coloumn, i) in gameState.board"
       :key="`column-${i}`"
@@ -9,7 +9,7 @@
       @mouseleave="hoveredColoumn == i && (hoveredColoumn = undefined)"
     >
       <div
-        v-if="hoveredColoumn == i"
+        v-if="interactive && hoveredColoumn == i"
         class="rounded-full absolute top-0 w-10 h-10 sm:w-14 h-14"
         :class="nextTokenClass"
       />
@@ -34,7 +34,8 @@ const noToken = 'bg-gray-200';
 
 export default {
   props: {
-    gameState: { type: Object, required: true }
+    gameState: { type: Object, required: true },
+    interactive: { type: Boolean, required: true },
   },
 
   data() {
@@ -54,7 +55,7 @@ export default {
 
   methods: {
     canPlaceToken(column) {
-      return this.gameState.board[column].indexOf('_') != -1;
+      return this.interactive && this.gameState.board[column].indexOf('_') != -1;
     },
 
     placeToken(column) {

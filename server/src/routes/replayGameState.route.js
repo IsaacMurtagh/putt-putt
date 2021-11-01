@@ -6,8 +6,8 @@ const ConnectFour = require('../models/ConnectFour');
 
 async function handler(request, h) {
   const id = request.params.id;
-  const number = request.query.number || 1;
-  const events = await eventsTable.getEventsUpTo({id, number });
+  const number = request.query.number + 1;
+  const events = await eventsTable.getEventsUpTo({ id, number });
   if (!events.length) {
     throw boom.forbidden('INVALID_GAME_ID');
   }
@@ -21,7 +21,7 @@ module.exports = {
   options: {
     validate: {
         query: Joi.object({
-          number: Joi.number().positive(),
+          number: Joi.number().min(0).required(),
         }),
     }
   },
